@@ -5,9 +5,15 @@ import { cn } from "@/lib/utils";
 import { Logo } from "./logo";
 import { ModeToggle } from "@/components/mode-toggle";
 import { Button } from "@/components/ui/button";
+import { useConvexAuth } from "convex/react";
+import { SignInButton, UserButton } from "@clerk/clerk-react";
+import { Spinner } from "@/components/spinner";
+import Link from "next/link";
 
 export const Navbar = () => {
+  const { isAuthenticated, isLoading } = useConvexAuth();
   const scrolled = useScrollTop({ threshold: 10 });
+
   return (
     <header
       className={cn(
@@ -17,10 +23,30 @@ export const Navbar = () => {
     >
       <Logo />
       <div className="md:ml-auto md:justify-end justify-between w-full flex items-center gap-x-2">
-        <Button className="rounded" variant="ghost">
-          Login
-        </Button>
-        <Button className="rounded">Enter DevBoard</Button>
+        {isLoading && <Spinner />}
+        {!isLoading && !isAuthenticated && (
+          <>
+            <SignInButton mode="modal">
+              <Button className="rounded" variant="ghost" size="sm">
+                Login
+              </Button>
+            </SignInButton>
+            <SignInButton mode="modal">
+              <Button className="rounded" size="sm">
+                Get DevBoard free
+              </Button>
+            </SignInButton>
+          </>
+        )}
+
+        {!isLoading && isAuthenticated && (
+          <>
+            <Button asChild className="rounded" variant="ghost" size="sm">
+              <Link href="/documents">Enter DevBoard</Link>
+            </Button>
+            <UserButton afterSwitchSessionUrl="/" />
+          </>
+        )}
         <ModeToggle />
       </div>
     </header>
