@@ -12,7 +12,7 @@ const DocumentsPage = () => {
   const { user } = useUser();
   const createDocument = useMutation(api.documents.createDocument);
 
-  const onCreateDocument = async () => {
+  const handleCreateDocument = async () => {
     const promise = createDocument({
       title: "Untitled",
     });
@@ -45,7 +45,7 @@ const DocumentsPage = () => {
         Welcome to {user?.firstName}&apos;s DevBoard
       </h2>
 
-      <Button onClick={onCreateDocument}>
+      <Button onClick={handleCreateDocument}>
         <PlusCircle className="h-4 w-4 mr-2" />
         Create a note
       </Button>
