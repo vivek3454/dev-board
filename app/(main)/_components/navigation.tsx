@@ -1,20 +1,27 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { ChevronsLeft, MenuIcon, PlusCircle, Search, Settings } from "lucide-react";
+import {
+  ChevronsLeft,
+  MenuIcon,
+  Plus,
+  PlusCircle,
+  Search,
+  Settings,
+} from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import { UserItem } from "./user-item";
-import { useMutation, useQuery } from "convex/react";
+import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Item } from "./item";
 import { toast } from "sonner";
+import { DocumentList } from "./document-list";
 
 export const Navigation = () => {
   const pathname = usePathname();
   const isMobile = useMediaQuery("(max-width: 768px)");
-  const documents = useQuery(api.documents.getDocuments);
   const createDocument = useMutation(api.documents.createDocument);
 
   const isResizingRef = useRef(false);
@@ -138,33 +145,21 @@ export const Navigation = () => {
         </div>
         <div>
           <UserItem />
-          <Item
-            label="Search"
-            icon={Search}
-            isSearch
-            onClick={()=>{}}
-          />
-          <Item
-            label="Settings"
-            icon={Settings}
-            onClick={()=>{}}
-          />
+          <Item label="Search" icon={Search} isSearch onClick={() => {}} />
+          <Item label="Settings" icon={Settings} onClick={() => {}} />
           <Item
             label="New Page"
             icon={PlusCircle}
             onClick={handleCreateDocument}
           />
         </div>
-        <div className="mt-3">
-          {documents?.map((document, index) => (
-            <Item
-              key={document._id}
-              label="New Page"
-              onClick={() => {}}
-              icon={PlusCircle}
-              level={index}
-            />
-          ))}
+        <div className="mt-4">
+          <DocumentList />
+          <Item
+            label="Add a page"
+            icon={Plus}
+            onClick={handleCreateDocument}
+          />
         </div>
         <div
           onMouseDown={handleMouseDown}
