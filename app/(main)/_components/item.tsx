@@ -33,7 +33,7 @@ interface ItemProps {
   level?: number;
   onExpand?: () => void;
   label: string;
-  onClick: () => void;
+  onClick?: () => void;
   icon: LucideIcon;
 }
 
@@ -100,7 +100,8 @@ export const Item = ({
   };
 
   return (
-    <button
+    <div
+    role="button"
       style={{ paddingLeft: level ? `${level * 12 + 12}px` : "12px" }}
       className={cn(
         "group cursor-pointer min-h-[27px] text-sm py-1 pr-3 w-full hover:bg-primary/5 flex items-center text-muted-foreground font-medium",
@@ -167,7 +168,7 @@ export const Item = ({
           </div>
         </div>
       )}
-    </button>
+    </div>
   );
 };
 
