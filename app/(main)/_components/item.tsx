@@ -92,6 +92,8 @@ export const Item = ({
       id,
     });
 
+    router.push("/documents");
+
     toast.promise(promise, {
       loading: "Moving to trash...",
       success: "Note moved to trash!",
@@ -101,7 +103,7 @@ export const Item = ({
 
   return (
     <div
-    role="button"
+      role="button"
       style={{ paddingLeft: level ? `${level * 12 + 12}px` : "12px" }}
       className={cn(
         "group cursor-pointer min-h-[27px] text-sm py-1 pr-3 w-full hover:bg-primary/5 flex items-center text-muted-foreground font-medium",
