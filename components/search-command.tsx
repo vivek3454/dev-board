@@ -14,19 +14,15 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { useSearch } from "@/hooks/useSearch";
+import { useSearch } from "@/hooks/use-search";
 import { api } from "@/convex/_generated/api";
 
 export const SearchCommand = () => {
   const { user } = useUser();
   const router = useRouter();
-  // const { isOpen, onOpen, onClose } = useSearch();
+  const { isOpen, toggle, onClose } = useSearch();
   const [isMounted, setIsMounted] = useState(false);
   const documents = useQuery(api.documents.getSearch);
-
-  const toggle = useSearch((store) => store.toggle);
-  const isOpen = useSearch((store) => store.isOpen);
-  const onClose = useSearch((store) => store.onClose);
 
   useEffect(() => {
     setIsMounted(true);
