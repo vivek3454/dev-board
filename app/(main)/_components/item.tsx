@@ -90,9 +90,9 @@ export const Item = ({
     if (!id) return;
     const promise = archiveDocuments({
       id,
+    }).then(() => {
+      router.push("/documents");
     });
-
-    router.push("/documents");
 
     toast.promise(promise, {
       loading: "Moving to trash...",
