@@ -3,15 +3,12 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
   DialogHeader,
-  DialogTitle,
-  DialogTrigger,
+  DialogTitle
 } from "@/components/ui/dialog";
 import { useSettings } from "@/hooks/use-settings";
-import { Label } from "../ui/label";
 import { ModeToggle } from "../mode-toggle";
+import { Label } from "../ui/label";
 
 export const SettingsModal = () => {
   const { isOpen, onClose } = useSettings();
