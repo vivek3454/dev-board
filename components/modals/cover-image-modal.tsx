@@ -12,35 +12,37 @@ import { useCoverImage } from "@/hooks/use-cover-image";
 import { useEdgeStore } from "@/lib/edgestore";
 import { useMutation } from "convex/react";
 import { useParams } from "next/navigation";
-import { useCallback } from "react";
 import { SingleImageDropzone } from "../upload/single-image";
 import { UploaderProvider, UploadFn } from "../upload/uploader-provider";
 
 export const CoverImageModal = () => {
-  const { isOpen, onClose } = useCoverImage();
+  const { isOpen, onClose, url: coverImageUrl } = useCoverImage();
   const params = useParams();
-
   const update = useMutation(api.documents.update);
-
   const { edgestore } = useEdgeStore();
-  const uploadFn: UploadFn = useCallback(
-    async ({ file, onProgressChange, signal }: Parameters<UploadFn>[0]) => {
-      const res = await edgestore.publicFiles.upload({
-        file,
-        signal,
-        onProgressChange,
-      });
 
-      await update({
-        id: params.documentId as Id<"documents">,
-        coverImage: res.url,
-      });
+  const uploadFn = async ({
+    file,
+    onProgressChange,
+    signal,
+  }: Parameters<UploadFn>[0]) => {
+    const res = await edgestore.publicFiles.upload({
+      file,
+      signal,
+      onProgressChange,
+      options: {
+        replaceTargetUrl: coverImageUrl,
+      },
+    });
 
-      onClose();
-      return res;
-    },
-    [edgestore, update, params.documentId, onClose]
-  );
+    await update({
+      id: params.documentId as Id<"documents">,
+      coverImage: res.url,
+    });
+
+    onClose();
+    return res;
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
