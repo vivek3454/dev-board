@@ -10,7 +10,7 @@ import {
   Settings,
   Trash,
 } from "lucide-react";
-import { useParams, usePathname } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import { UserItem } from "./user-item";
@@ -30,6 +30,7 @@ import { useSettings } from "@/hooks/use-settings";
 import { Navbar } from "./navbar";
 
 export const Navigation = () => {
+  const router = useRouter();
   const { onOpen } = useSearch();
   const { onOpen: openSettings } = useSettings();
   const pathname = usePathname();
@@ -127,6 +128,8 @@ export const Navigation = () => {
   const handleCreateDocument = async () => {
     const promise = createDocument({
       title: "Untitled",
+    }).then((documentId) => {
+      router.push(`/documents/${documentId}`);
     });
 
     toast.promise(promise, {
