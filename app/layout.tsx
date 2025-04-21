@@ -59,7 +59,7 @@ export default function RootLayout({
               storageKey="devboard-theme"
             >
               {children}
-              <Toaster position="top-right" />
+              <Toaster position="top-center" />
               <ModalProvider />
             </ThemeProvider>
           </EdgeStoreProvider>
