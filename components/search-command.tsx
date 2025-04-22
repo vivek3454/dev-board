@@ -41,7 +41,7 @@ export const SearchCommand = () => {
     return () => {
       document.removeEventListener("keydown", keyDown);
     };
-  }, []);
+  }, [toggle]);
 
   const onSelect = (id: string) => {
     router.push(`/documents/${id}`);

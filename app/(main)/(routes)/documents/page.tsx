@@ -1,5 +1,8 @@
 "use client";
 
+export const dynamic = "force-dynamic";
+// export const fetchCache = "force-no-store";
+
 import { Button } from "@/components/ui/button";
 import { api } from "@/convex/_generated/api";
 import { useUser } from "@clerk/clerk-react";

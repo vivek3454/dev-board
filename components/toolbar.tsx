@@ -23,7 +23,7 @@ export const Toolbar = ({ initialData, preview }: ToolbarProps) => {
   const update = useMutation(api.documents.update);
   const removeIcon = useMutation(api.documents.removeIcon);
 
-  const { isOpen, onOpen } = useCoverImage();
+  const { onOpen } = useCoverImage();
 
   const enableInput = () => {
     if (preview) return;
