@@ -1,4 +1,5 @@
 "use client";
+export const dynamic = "force-dynamic";
 
 import { Spinner } from "@/components/spinner";
 import { useConvexAuth } from "convex/react";

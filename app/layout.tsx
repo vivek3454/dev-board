@@ -1,5 +1,4 @@
 export const dynamic = "force-dynamic";
-
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
@@ -10,6 +9,8 @@ import { ModalProvider } from "@/components/providers/modal-provider";
 
 import "./globals.css";
 import { EdgeStoreProvider } from "@/lib/edgestore";
+import { Suspense } from "react";
+import { Loading } from "@/components/loading";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -51,21 +52,23 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ConvexClientProvider>
-          <EdgeStoreProvider>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-              storageKey="devboard-theme"
-            >
-              {children}
-              <Toaster position="top-center" />
-              <ModalProvider />
-            </ThemeProvider>
-          </EdgeStoreProvider>
-        </ConvexClientProvider>
+        <Suspense fallback={<Loading />}>
+          <ConvexClientProvider>
+            <EdgeStoreProvider>
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem
+                disableTransitionOnChange
+                storageKey="devboard-theme"
+              >
+                {children}
+                <Toaster position="top-center" />
+                <ModalProvider />
+              </ThemeProvider>
+            </EdgeStoreProvider>
+          </ConvexClientProvider>
+        </Suspense>
       </body>
     </html>
   );
